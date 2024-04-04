@@ -29,11 +29,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -57,6 +58,10 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyApp(modifier: Modifier = Modifier) {
+
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -72,7 +77,7 @@ fun MyApp(modifier: Modifier = Modifier) {
 
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { showBottomSheet = true }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -124,8 +129,27 @@ fun MyApp(modifier: Modifier = Modifier) {
             }
         }
 
-    }
+//        if (showBottomSheet) {
+//            ModalBottomSheet(
+//                onDismissRequest = {
+//                    showBottomSheet = false
+//                },
+//                sheetState = sheetState
+//            ) {
+//                // Sheet content
+//                Button(onClick = {
+//                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+//                        if (!sheetState.isVisible) {
+//                            showBottomSheet = false
+//                        }
+//                    }
+//                }) {
+//                    Text("Hide bottom sheet")
+//                }
+//            }
+//        }
 
+    }
 }
 
 
