@@ -1,8 +1,12 @@
 package com.hfad.mycountcompose.data
+import android.content.Context
 
-class AppContainer {
+interface AppContainer {
+    val itemsRepository: ItemsRepository
+}
 
-    override val itemsRepository: ItemsRepository by lazy {
-        OfflineItemsRepository(InventoryDatabase.getDatabase(context).itemDao())
+class AppDataContainer (private val context: Context) : AppContainer{
+   override val itemsRepository: ItemsRepository by lazy {
+        OfflineItemsRepository(AppDatabase.getDatabase(context).getConstantaDao())
     }
 }

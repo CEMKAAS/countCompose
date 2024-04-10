@@ -46,12 +46,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.hfad.mycountcompose.ui.MyApp
 import com.hfad.mycountcompose.ui.theme.MyCountComposeTheme
 import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,115 +61,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun MyApp(modifier: Modifier = Modifier) {
-        var valueCounter by remember {
-            mutableStateOf(0)
-        }
-        val sheetState = rememberModalBottomSheetState()
-        val scope = rememberCoroutineScope()
-        var showBottomSheet by remember { mutableStateOf(false) }
-        Scaffold(
-            topBar = {
-                CenterAlignedTopAppBar(
-                    colors = TopAppBarDefaults.largeTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary,
-                    ),
-                    title = {
-                        Text(
-                            "sds", maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { showBottomSheet = true }) {
-                            Icon(
-                                imageVector = Icons.Filled.Menu,
-                                contentDescription = "Localized description"
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { /* do something */ }) {
-                            Icon(
-                                imageVector = Icons.Filled.Menu,
-                                contentDescription = "Localized description"
-                            )
-                        }
-                    },
-                )
-            }
-        ) { contentPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(contentPadding),
-                verticalArrangement = Arrangement.SpaceAround,
-                horizontalAlignment = Alignment.CenterHorizontally
-
-            ) {
-
-                Spacer(modifier = Modifier.padding(8.dp))
-                Text(
-                    text = valueCounter.toString(), fontSize = 50.sp
-                )
-                Row() {
-                    Image(
-                        painter = painterResource(id = R.drawable.minuse),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(177.dp)
-                            .width(170.dp)
-                            .clickable { valueCounter -= 1 },
-
-                        contentScale = ContentScale.Fit
-                    )
-
-                    Image(
-                        painter = painterResource(id = R.drawable.plus), contentDescription = null,
-                        modifier = Modifier
-                            .height(177.dp)
-                            .width(170.dp)
-                            .clickable { valueCounter += 1 },
-                        contentScale = ContentScale.Fit
-                    )
-                }
-            }
-            if (showBottomSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = {
-                        showBottomSheet = false
-                    },
-                    sheetState = sheetState
-                ) {
-                    // Sheet content
-                    Button(onClick = {
-                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            if (!sheetState.isVisible) {
-                                showBottomSheet = false
-                            }
-                        }
-                    }) {
-                        Text("Hide bottom sheet")
-                    }
-                }
-            }
-
-        }
-    }
 }
-
-
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    MyCountComposeTheme {
-//        MyApp()
-//    }
-//}
