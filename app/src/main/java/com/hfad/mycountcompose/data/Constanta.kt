@@ -5,13 +5,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
-@Entity(
-    tableName = "List",
-    indices = [Index("id")]
-)
+@Entity(tableName = "List")
 data class Constanta(
 
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
 
 //    val title: String, // Название описание (название счетчика)
 

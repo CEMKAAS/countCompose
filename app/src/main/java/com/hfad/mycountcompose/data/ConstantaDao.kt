@@ -6,8 +6,8 @@ import androidx.room.Query
 
 @Dao
 interface ConstantaDao {
-    @Insert(entity = Constanta::class)
-    fun insertConstantaData(constanta: Constanta)
+    @Insert
+    suspend fun insertConstantaData(constanta: Constanta)
 
     @Query("DELETE FROM List WHERE id = :id")
     fun deleteStatisticDataById(id: Long)
